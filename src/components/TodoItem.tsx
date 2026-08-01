@@ -51,7 +51,7 @@ const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
       <div className="flex gap-1">
         <button
           className="opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 p-1.5 hover:bg-indigo-100 text-neutral-500 hover:text-black rounded-lg duration-200 transition-all cursor-pointer flex items-center justify-center"
-          onClick={() => setIsEditing(true)}
+          onClick={() => handleEdit(todo.title)}
           type="button"
         >
           {isEditing ? <X size={15} /> : <Pencil size={15} />}
