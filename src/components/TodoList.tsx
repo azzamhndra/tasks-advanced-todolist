@@ -1,11 +1,16 @@
 import EmptyState from './EmptyState';
 import { ListTodo, SearchX } from 'lucide-react';
 import TodoItem from './TodoItem';
+import type { Todo } from '../types/Todo';
 
-const todos = ['Anjay'];
-const filteredTodos = [1];
+const filteredTodos = [];
 
-const TodoList = () => {
+type TodoListProps = {
+  todos: Todo[];
+  onEdit: (id: number, title: string) => void;
+};
+
+const TodoList = ({ todos, onEdit }: TodoListProps) => {
   if (todos.length === 0) {
     return (
       <EmptyState
@@ -28,7 +33,9 @@ const TodoList = () => {
 
   return (
     <div>
-      <TodoItem />
+      {todos.map((todo) => (
+        <TodoItem todo={todo} key={todo.id} onEdit={onEdit} />
+      ))}
     </div>
   );
 };

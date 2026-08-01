@@ -1,20 +1,20 @@
-import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useState, type ChangeEvent } from 'react';
 
 import { Pencil, Trash, X } from 'lucide-react';
+import type { Todo } from '../types/Todo';
 
-const TodoItem = () => {
+type TodoItemProps = {
+  todo: Todo;
+  onEdit: (id: number, title: string) => void;
+};
+
+const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [task, setTask] = useState('Tasks');
+  const [task, setTask] = useState('');
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      setIsEditing(false);
-      return;
-    }
-
-    if (e.key === 'Escape') {
-      setIsEditing(false);
-    }
+  const handleEdit = (todoTitle: string) => {
+    setTask(todoTitle);
+    setIsEditing(true);
   };
 
   return (
@@ -31,14 +31,19 @@ const TodoItem = () => {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setTask(e.target.value)
             }
-            onKeyDown={handleKeyDown}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                onEdit(todo.id, task);
+                setIsEditing(false);
+              }
+            }}
           />
         ) : (
           <button
             className="truncate text-left text-[0.95rem] text-neutral-800 flex-1"
-            onClick={() => setIsEditing(true)}
+            onClick={() => handleEdit(todo.title)}
           >
-            {task}
+            {todo.title}
           </button>
         )}
       </div>

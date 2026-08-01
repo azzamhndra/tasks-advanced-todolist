@@ -1,16 +1,19 @@
 import { Plus } from 'lucide-react';
 import Button from './Button';
-import { useState, type ChangeEvent, type SyntheticEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 
-const TodoForm = () => {
+type TodoFormProps = {
+  onAdd: (task: string) => void;
+};
+
+const TodoForm = ({ onAdd }: TodoFormProps) => {
   const [task, setTask] = useState('');
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTask(e.target.value);
-  };
-
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const trimmedTask = task.trim();
+    if (!trimmedTask) return;
+    onAdd(trimmedTask);
     setTask('');
   };
 
@@ -20,7 +23,7 @@ const TodoForm = () => {
       onSubmit={handleSubmit}
     >
       <input
-        onChange={handleChange}
+        onChange={(e) => setTask(e.target.value)}
         value={task}
         type="text"
         name="task"
@@ -30,7 +33,7 @@ const TodoForm = () => {
       <Button
         type="submit"
         className="disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={!task}
+        disabled={!task.trim()}
       >
         <Plus />
         Add Task
