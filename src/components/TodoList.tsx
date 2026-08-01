@@ -1,8 +1,9 @@
 import EmptyState from './EmptyState';
 import { ListTodo, SearchX } from 'lucide-react';
+import TodoItem from './TodoItem';
 
 const todos = ['Anjay'];
-const filteredTodos = [];
+const filteredTodos = [1];
 
 const TodoList = () => {
   if (todos.length === 0) {
@@ -25,6 +26,10 @@ const TodoList = () => {
     );
   }
 
-  return <div>TodoList</div>;
+  return (
+    <div>
+      <TodoItem />
+    </div>
+  );
 };
 export default TodoList;
