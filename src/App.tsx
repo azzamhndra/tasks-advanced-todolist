@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Header from './components/Header';
 import TodoFilter from './components/TodoFilter';
@@ -8,7 +8,17 @@ import TodoList from './components/TodoList';
 import type { Todo } from './types/Todo';
 
 const App = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const savedTodos = localStorage.getItem('todos');
+
+    if (!savedTodos) return [];
+
+    return JSON.parse(savedTodos);
+  });
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   const handleEditTask = (todoId: number, newTitle: string) => {
     setTodos((prevTodos) =>
