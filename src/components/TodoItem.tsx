@@ -6,9 +6,10 @@ import type { Todo } from '../types/Todo';
 type TodoItemProps = {
   todo: Todo;
   onEdit: (id: number, title: string) => void;
+  onDelete: (id: number) => void;
 };
 
-const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
+const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [task, setTask] = useState('');
 
@@ -58,6 +59,7 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
         <button
           className="opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 p-1.5 hover:bg-red-100 text-neutral-500 hover:text-red-500 rounded-lg duration-200 transition-all cursor-pointer flex items-center justify-center"
           type="button"
+          onClick={() => onDelete(todo.id)}
         >
           <Trash size={15} />
         </button>

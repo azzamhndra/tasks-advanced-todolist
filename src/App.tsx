@@ -28,13 +28,21 @@ const App = () => {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
+  const handleDeleteTask = (todoId: number) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 px-4 py-8 mx-auto">
       <div className="mx-auto max-w-[900px] flex w-full flex-col gap-6">
         <Header />
         <TodoForm onAdd={handleAddTask} />
         <TodoFilter />
-        <TodoList todos={todos} onEdit={handleEditTask} />
+        <TodoList
+          todos={todos}
+          onEdit={handleEditTask}
+          onDelete={handleDeleteTask}
+        />
       </div>
     </div>
   );
