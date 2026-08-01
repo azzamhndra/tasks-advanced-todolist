@@ -9,9 +9,10 @@ type TodoListProps = {
   todos: Todo[];
   onEdit: (id: number, title: string) => void;
   onDelete: (id: number) => void;
+  onToggle: (id: number) => void;
 };
 
-const TodoList = ({ todos, onEdit, onDelete }: TodoListProps) => {
+const TodoList = ({ todos, onEdit, onDelete, onToggle }: TodoListProps) => {
   if (todos.length === 0) {
     return (
       <EmptyState
@@ -40,6 +41,7 @@ const TodoList = ({ todos, onEdit, onDelete }: TodoListProps) => {
           key={todo.id}
           onEdit={onEdit}
           onDelete={onDelete}
+          onToggle={onToggle}
         />
       ))}
     </div>

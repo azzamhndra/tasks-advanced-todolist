@@ -32,6 +32,14 @@ const App = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
   };
 
+  const handleToggleTask = (todoId: number) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 px-4 py-8 mx-auto">
       <div className="mx-auto max-w-[900px] flex w-full flex-col gap-6">
@@ -42,6 +50,7 @@ const App = () => {
           todos={todos}
           onEdit={handleEditTask}
           onDelete={handleDeleteTask}
+          onToggle={handleToggleTask}
         />
       </div>
     </div>

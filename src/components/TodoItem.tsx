@@ -1,17 +1,18 @@
 import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
-import { Pencil, Trash, X } from 'lucide-react';
+import { Check, Pencil, Trash, X } from 'lucide-react';
 import type { Todo } from '../types/Todo';
 
 type TodoItemProps = {
   todo: Todo;
   onEdit: (id: number, title: string) => void;
   onDelete: (id: number) => void;
+  onToggle: (id: number) => void;
 };
 
 const BASE_BUTTON_CLASS =
   'p-1.5 text-neutral-500 rounded-lg duration-200 transition-all cursor-pointer flex items-center justify-center';
 
-const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
+const TodoItem = ({ todo, onEdit, onDelete, onToggle }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [task, setTask] = useState('');
 
@@ -36,7 +37,13 @@ const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
   return (
     <div className="group flex w-full border border-neutral-300 shadow-sm px-4 py-3.5 rounded-2xl hover:-translate-y-0.5 duration-200 gap-3">
       <div className="flex gap-4 items-center flex-1">
-        <button className="rounded-full border-2 border-neutral-300 h-6 w-6 hover:border-2 hover:border-indigo-500 cursor-pointer duration-200"></button>
+        <button
+          className={`flex items-center justify-center rounded-full border-2 h-6 w-6 hover:border-2 cursor-pointer duration-200 ${todo.completed ? 'bg-indigo-500 border-transparent' : 'border-neutral-300 hover:border-indigo-500'}`}
+          type="button"
+          onClick={() => onToggle(todo.id)}
+        >
+          <Check color="white" size={12} />
+        </button>
         {isEditing ? (
           <input
             autoFocus
@@ -51,7 +58,7 @@ const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
           />
         ) : (
           <button
-            className="truncate text-left text-[0.95rem] text-neutral-800 flex-1"
+            className={`truncate text-left text-[0.95rem] flex-1 ${todo.completed ? 'line-through text-gray-400' : 'text-neutral-800 '}`}
             onClick={() => handleEdit(todo.title)}
           >
             {todo.title}
