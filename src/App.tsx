@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import TodoFilter from './components/TodoFilter';
 import TodoForm from './components/TodoForm';
 
 const App = () => {
@@ -7,6 +8,7 @@ const App = () => {
       <div className="mx-auto max-w-[900px] flex w-full flex-col gap-6">
         <Header />
         <TodoForm />
+        <TodoFilter />
       </div>
     </div>
   );
