@@ -1,5 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
-
+import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { Pencil, Trash, X } from 'lucide-react';
 import type { Todo } from '../types/Todo';
 
@@ -9,6 +8,9 @@ type TodoItemProps = {
   onDelete: (id: number) => void;
 };
 
+const BASE_BUTTON_CLASS =
+  'p-1.5 text-neutral-500 rounded-lg duration-200 transition-all cursor-pointer flex items-center justify-center';
+
 const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [task, setTask] = useState('');
@@ -16,6 +18,19 @@ const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
   const handleEdit = (todoTitle: string) => {
     setTask(todoTitle);
     setIsEditing(true);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onEdit(todo.id, task);
+      setIsEditing(false);
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      setIsEditing(false);
+      setTask('');
+    }
   };
 
   return (
@@ -32,12 +47,7 @@ const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setTask(e.target.value)
             }
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                onEdit(todo.id, task);
-                setIsEditing(false);
-              }
-            }}
+            onKeyDown={handleKeyDown}
           />
         ) : (
           <button
@@ -48,16 +58,26 @@ const TodoItem = ({ todo, onEdit, onDelete }: TodoItemProps) => {
           </button>
         )}
       </div>
+
       <div className="flex gap-1">
         <button
-          className="opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 p-1.5 hover:bg-indigo-100 text-neutral-500 hover:text-black rounded-lg duration-200 transition-all cursor-pointer flex items-center justify-center"
-          onClick={() => handleEdit(todo.title)}
+          className={`${BASE_BUTTON_CLASS} hover:bg-indigo-100 hover:text-black ${!isEditing ? 'opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0' : ''}`}
+          onMouseDown={(e) => e.preventDefault()}
           type="button"
+          onClick={() => {
+            if (isEditing) {
+              setIsEditing(false);
+              setTask('');
+            } else {
+              handleEdit(todo.title);
+            }
+          }}
         >
           {isEditing ? <X size={15} /> : <Pencil size={15} />}
         </button>
+
         <button
-          className="opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 p-1.5 hover:bg-red-100 text-neutral-500 hover:text-red-500 rounded-lg duration-200 transition-all cursor-pointer flex items-center justify-center"
+          className={`${BASE_BUTTON_CLASS} hover:bg-red-100 hover:text-red-500 ${!isEditing ? 'opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0' : ''}`}
           type="button"
           onClick={() => onDelete(todo.id)}
         >
