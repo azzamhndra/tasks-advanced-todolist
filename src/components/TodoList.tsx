@@ -1,18 +1,31 @@
 import EmptyState from './EmptyState';
-import { ListTodo, SearchX } from 'lucide-react';
+import { CheckCircle, ListTodo, SearchX } from 'lucide-react';
 import TodoItem from './TodoItem';
 import type { Todo } from '../types/Todo';
-
-const filteredTodos = [1];
+import type { FilterOptions } from '../types/FilterOptions';
 
 type TodoListProps = {
   todos: Todo[];
   onEdit: (id: number, title: string) => void;
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
+  visibleTodos: Todo[];
+  selectedFilter: FilterOptions;
+  search: string;
 };
 
-const TodoList = ({ todos, onEdit, onDelete, onToggle }: TodoListProps) => {
+const TodoList = ({
+  todos,
+  visibleTodos,
+  selectedFilter,
+  search,
+  onEdit,
+  onDelete,
+  onToggle,
+}: TodoListProps) => {
+  const isSearching = search.trim() !== '';
+  const isEmpty = visibleTodos.length === 0;
+
   if (todos.length === 0) {
     return (
       <EmptyState
@@ -23,7 +36,27 @@ const TodoList = ({ todos, onEdit, onDelete, onToggle }: TodoListProps) => {
     );
   }
 
-  if (filteredTodos.length === 0) {
+  if (selectedFilter === 'active' && !isSearching && isEmpty) {
+    return (
+      <EmptyState
+        title="All caught up"
+        description="You have no active tasks. Enjoy the moment."
+        icon={CheckCircle}
+      />
+    );
+  }
+
+  if (selectedFilter === 'completed' && !isSearching && isEmpty) {
+    return (
+      <EmptyState
+        title="Nothing completed yet"
+        description="Finish a task and it will show up here."
+        icon={CheckCircle}
+      />
+    );
+  }
+
+  if (isEmpty) {
     return (
       <EmptyState
         title="No matching tasks"
@@ -35,7 +68,7 @@ const TodoList = ({ todos, onEdit, onDelete, onToggle }: TodoListProps) => {
 
   return (
     <div>
-      {todos.map((todo) => (
+      {visibleTodos.map((todo) => (
         <TodoItem
           todo={todo}
           key={todo.id}
