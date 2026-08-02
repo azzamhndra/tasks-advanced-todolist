@@ -1,75 +1,89 @@
-# React + TypeScript + Vite
+# Todo List App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Todo List application built with React, TypeScript, Vite, and Tailwind CSS. This project was created to practice React fundamentals by building a complete CRUD application with a clean, responsive, and user-friendly interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Add new tasks
+- Edit existing tasks
+- Mark tasks as completed
+- Delete tasks
+- Search tasks by title
+- Filter tasks (All, Active, Completed)
+- Persist tasks using Local Storage
+- Light and Dark mode with theme persistence
+- Context-aware empty states
+- Responsive design
 
-## React Compiler
+## Preview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Light Mode
 
-## Expanding the ESLint configuration
+![Light Mode](./screenshot/light.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Dark Mode
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![Dark Mode](./screenshot/dark.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Lucide React
 
-```
+## What I Learned
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Building this project helped me gain a deeper understanding of React and TypeScript by implementing a complete CRUD application from scratch.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### React
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Functional components
+- Component composition
+- Props
+- State management with `useState`
+- Side effects with `useEffect`
+- Conditional rendering
+- Rendering lists with `map`
+- Event handling
+- Controlled components
+- Derived state
 
-```
+### TypeScript
+
+- Creating custom types
+- Typing component props
+- Typing event handlers
+- Reusable type aliases
+
+### Application Logic
+
+- CRUD operations
+- Search functionality
+- Todo filtering
+- Local Storage persistence
+- Theme management
+- Contextual empty states
+- Separating business logic from presentation
+
+### UI Development
+
+- Tailwind CSS utility classes
+- Dark mode implementation
+- Smooth UI transitions
+- Reusable components
+
+## Challenges
+
+Some of the challenges I encountered while building this project included:
+
+- Designing filtering logic without creating unnecessary state.
+- Combining filtering and searching while keeping the code simple.
+- Handling multiple empty states based on the application's current state.
+- Deciding which components should own state and which should only receive props.
+- Persisting both todos and theme preferences using Local Storage.
+
+## License
+
+This project was created for learning purposes.
