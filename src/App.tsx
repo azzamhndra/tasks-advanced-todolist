@@ -19,9 +19,21 @@ const App = () => {
 
   const [search, setSearch] = useState('');
 
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark' ? 'dark' : 'light';
+  });
+
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem('theme', theme);
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [todos, theme]);
 
   let filteredTodos: Todo[] = todos;
 
@@ -38,6 +50,10 @@ const App = () => {
       todo.title.toLowerCase().includes(search.toLowerCase())
     );
   }
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const handleSearchTask = (value: string) => {
     setSearch(value);
@@ -78,9 +94,9 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 mx-auto">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 px-4 py-8 mx-auto transition-colors duration-300">
       <div className="mx-auto max-w-[900px] flex w-full flex-col gap-6">
-        <Header />
+        <Header theme={theme} onToggleTheme={handleToggleTheme} />
         <TodoForm onAdd={handleAddTask} />
         <TodoFilter
           onFilterChange={handleFilterChange}

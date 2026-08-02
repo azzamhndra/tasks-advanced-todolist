@@ -19,7 +19,7 @@ const TodoForm = ({ onAdd }: TodoFormProps) => {
 
   return (
     <form
-      className="w-full flex border border-neutral-300 shadow-sm p-4 justify-between items-center rounded-3xl"
+      className="w-full flex border border-neutral-300 shadow-sm p-4 justify-between items-center rounded-3xl dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 duration-300 transition-colors"
       onSubmit={handleSubmit}
     >
       <input
@@ -27,7 +27,7 @@ const TodoForm = ({ onAdd }: TodoFormProps) => {
         value={task}
         type="text"
         name="task"
-        className="py-2 px-4 focus:outline-none flex-1 placeholder:text-neutral-400"
+        className="py-2 px-4 focus:outline-none flex-1 placeholder:text-neutral-400 dark:placeholder:text-slate-400"
         placeholder="Add a new task..."
       />
       <Button

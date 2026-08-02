@@ -67,7 +67,7 @@ const TodoList = ({
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-2.5">
       {visibleTodos.map((todo) => (
         <TodoItem
           todo={todo}
